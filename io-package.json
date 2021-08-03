@@ -17,8 +17,8 @@
       }
     },
     "titleLang": {
-      "en": "Template (JavaScript)",
-      "de": "Vorlage (JavaScript)",
+      "en": "tibber adapter",
+      "de": "tibber Adapter",
       "ru": "Шаблон (JavaScript)",
       "pt": "Modelo (JavaScript)",
       "nl": "Sjabloon (JavaScript)",
@@ -29,8 +29,8 @@
       "zh-cn": "模板 (JavaScript)"
     },
     "desc": {
-      "en": "Template for adapter development",
-      "de": "Vorlage für die Adapterentwicklung",
+      "en": "adapter for integration of tibber",
+      "de": "Adapter zur Integration von tibber",
       "ru": "Шаблон для разработки адаптера",
       "pt": "Modelo para desenvolvimento de adaptador",
       "nl": "Sjabloon voor adapterontwikkeling",
@@ -41,7 +41,7 @@
       "zh-cn": "适配器开发模板"
     },
     "authors": [
-      "Author <author@mail.com>"
+      "Author <tibber@mblatt.de>"
     ],
     "keywords": [
       "ioBroker",

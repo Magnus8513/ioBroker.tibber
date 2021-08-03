@@ -6,7 +6,7 @@
     "name": "Magnus8513",
     "email": "tibber@mblatt.de"
   },
-  "homepage": "https://github.com/Magnus8513/ioBroker.template",
+  "homepage": "https://github.com/Magnus8513/ioBroker.tibber",
   "license": "MIT",
   "keywords": [
     "ioBroker",
@@ -55,7 +55,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/Magnus8513/ioBroker.template/issues"
+    "url": "https://github.com/Magnus8513/ioBroker.tibber/issues"
   },
   "readmeFilename": "README.md"
 }
