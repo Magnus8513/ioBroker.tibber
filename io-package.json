@@ -1,36 +1,60 @@
 {
     "common": {
-        "name": "tibber",
+        "name": "template",
         "version": "0.0.1",
         "news": {
             "0.0.1": {
                 "en": "initial release",
                 "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
             }
         },
         "titleLang": {
-            "en": "tibber adapter",
-            "de": "tibber adapter",
+            "en": "Template (JavaScript)",
+            "de": "Vorlage (JavaScript)",
+            "ru": "Шаблон (JavaScript)",
+            "pt": "Modelo (JavaScript)",
+            "nl": "Sjabloon (JavaScript)",
+            "fr": "Modèle (JavaScript)",
+            "it": "Modello (JavaScript)",
+            "es": "Plantilla (JavaScript)",
+            "pl": "Szablon (JavaScript)",
+            "zh-cn": "模板 (JavaScript)"
         },
         "desc": {
-            "en": "adapter to integrate tibber",
-            "de": "adapter zur tibber integration",
+            "en": "Template for adapter development",
+            "de": "Vorlage für die Adapterentwicklung",
+            "ru": "Шаблон для разработки адаптера",
+            "pt": "Modelo para desenvolvimento de adaptador",
+            "nl": "Sjabloon voor adapterontwikkeling",
+            "fr": "Modèle pour le développement d'adaptateurs",
+            "it": "Modello per lo sviluppo dell'adattatore",
+            "es": "Plantilla para el desarrollo de adaptadores",
+            "pl": "Szablon do opracowania adaptera",
+            "zh-cn": "适配器开发模板"
         },
         "authors": [
             "Author <author@mail.com>"
         ],
         "keywords": [
             "ioBroker",
-            "tibber",
+            "template",
             "Smart Home",
             "home automation"
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "tibber.png",
+        "icon": "template.png",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Magnus8513/ioBroker.template/master/admin/tibber.png",
+        "extIcon": "https://raw.githubusercontent.com/Author/ioBroker.template/master/admin/template.png",
         "readme": "https://github.com/Author/ioBroker.template/blob/master/README.md",
         "loglevel": "info",
         "mode": "daemon",
@@ -41,8 +65,16 @@
         "adminTab": {
             "singleton": true,
             "name": {
-                "en": "Tibber",
-                "de": "Tibber",
+                "en": "Template (JavaScript)",
+                "de": "Vorlage (JavaScript)",
+                "ru": "Шаблон (JavaScript)",
+                "pt": "Modelo (JavaScript)",
+                "nl": "Sjabloon (JavaScript)",
+                "fr": "Modèle (JavaScript)",
+                "it": "Modello (JavaScript)",
+                "es": "Plantilla (JavaScript)",
+                "pl": "Szablon (JavaScript)",
+                "zh-cn": "模板 (JavaScript)"
             },
             "link": "",
             "fa-icon": "info"
