@@ -55,7 +55,7 @@
     "icon": "tibber.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/Magnus8513/ioBroker.tibber/main/admin/tibber.png",
-    "readme": "https://github.com/Magnus8513/ioBroker.template/blob/main/README.md",
+    "readme": "https://github.com/Magnus8513/ioBroker.tibber/blob/main/README.md",
     "loglevel": "info",
     "mode": "daemon",
     "type": "general",
@@ -65,8 +65,8 @@
     "adminTab": {
       "singleton": true,
       "name": {
-        "en": "Template (JavaScript)",
-        "de": "Vorlage (JavaScript)",
+        "en": "tibber",
+        "de": "tibber",
         "ru": "Шаблон (JavaScript)",
         "pt": "Modelo (JavaScript)",
         "nl": "Sjabloon (JavaScript)",
