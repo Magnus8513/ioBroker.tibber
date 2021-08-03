@@ -1,0 +1,63 @@
+{
+    "common": {
+        "name": "tibber",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+            }
+        },
+        "titleLang": {
+            "en": "tibber adapter",
+            "de": "tibber adapter",
+        },
+        "desc": {
+            "en": "adapter to integrate tibber",
+            "de": "adapter zur tibber integration",
+        },
+        "authors": [
+            "Author <author@mail.com>"
+        ],
+        "keywords": [
+            "ioBroker",
+            "tibber",
+            "Smart Home",
+            "home automation"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "tibber.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Magnus8513/ioBroker.template/master/admin/tibber.png",
+        "readme": "https://github.com/Author/ioBroker.template/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "general",
+        "compact": true,
+        "materialize": true,
+        "materializeTab": true,
+        "adminTab": {
+            "singleton": true,
+            "name": {
+                "en": "Tibber",
+                "de": "Tibber",
+            },
+            "link": "",
+            "fa-icon": "info"
+        },
+        "supportCustoms": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
