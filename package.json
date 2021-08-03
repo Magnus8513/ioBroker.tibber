@@ -1,22 +1,22 @@
 {
-  "name": "iobroker.template",
+  "name": "iobroker.tibber",
   "version": "0.0.1",
-  "description": "Template for adapter development",
+  "description": "Adapter for tibber integration",
   "author": {
-    "name": "Author",
-    "email": "author@mail.com"
+    "name": "Magnus8513",
+    "email": "tibber@mblatt.de"
   },
-  "homepage": "https://github.com/Author/ioBroker.template",
+  "homepage": "https://github.com/Magnus8513/ioBroker.template",
   "license": "MIT",
   "keywords": [
     "ioBroker",
-    "template",
+    "tibber",
     "Smart Home",
     "home automation"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Author/ioBroker.template"
+    "url": "https://github.com/Magnus8513/ioBroker.tibber"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.0"
@@ -55,7 +55,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/Author/ioBroker.template/issues"
+    "url": "https://github.com/Magnus8513/ioBroker.template/issues"
   },
   "readmeFilename": "README.md"
 }
