@@ -55,7 +55,7 @@
     "icon": "tibber.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/Magnus8513/ioBroker.template/master/admin/tibber.png",
-    "readme": "https://github.com/Magnus8513	/ioBroker.template/blob/master/README.md",
+    "readme": "https://github.com/Magnus8513/ioBroker.template/blob/master/README.md",
     "loglevel": "info",
     "mode": "daemon",
     "type": "general",
