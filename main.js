@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
-// const fs = require("fs");
+const fetch = require('node-fetch');
 
 class Tibber extends utils.Adapter {
 
@@ -28,6 +28,7 @@ class Tibber extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+
     /**
      * Is called when databases are connected and adapter received configuration.
      */
@@ -36,53 +37,100 @@ class Tibber extends utils.Adapter {
 
         // The adapters config (in the instance object everything under the attribute "native") is accessible via
         // this.config:
-        this.log.info('config option1: ' + this.config.option1);
-        this.log.info('config option2: ' + this.config.option2);
+        var api_url = "https://api.tibber.com/v1-beta/gql";
+        var access_token = this.config.access_token;
+		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
+		
+		
+		function subsequenceFromEndLast(sequence, at1) {
+			var start = sequence.length - 1 - at1;
+			var end = sequence.length;
+			return sequence.slice(start, end);
+		};	
+		
+		var myHeaders = new fetch.Headers();
+		myHeaders.append("Authorization", "Bearer " + access_token);
+		myHeaders.append("Content-Type", "application/json");
 
-        /*
-        For every state in the system there has to be also an object of type state
-        Here a simple template for a boolean variable named "testVariable"
-        Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-        */
-        await this.setObjectNotExistsAsync('testVariable', {
-            type: 'state',
-            common: {
-                name: 'testVariable',
-                type: 'boolean',
-                role: 'indicator',
-                read: true,
-                write: true,
-            },
-            native: {},
-        });
+		var graphql = JSON.stringify({
+		  query: graphql_query,
+		  //variables: {}
+		});
+		var requestOptions = {
+		  method: 'POST',
+		  headers: myHeaders,
+		  body: graphql,
+		  redirect: 'follow'
+		};
+		
+		fetch("https://api.tibber.com/v1-beta/gql", requestOptions)
+			.then(response => {
+				//this.log.info('response:  ' + response.json());
+				return response.json();
+			})
+ 			.then(result => {
+				var day_list = ['today', 'tomorrow'];
+				var key_list = ['total', 'energy', 'tax', 'startsAt'];
+				
+				var hour = '';
+				for (var day_index in day_list) {
+					var day = day_list[day_index];
+					for (var key_index in key_list) {
+						var key = key_list[key_index];
+					  
+						for (let i = 0; i <= 23; i++) {
+							hour = subsequenceFromEndLast('0' + i, 1);
+							//this.log.info(hour);
+							var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+							
+							//creating states for price info data if not yet existing:
+							var state_type = 'number'
+							if (key == 'startsAt') { 
+								state_type = 'string'; 
+							};
+							//this.log.info(state_name);
+							this.setObjectNotExistsAsync(state_name, {
+								type: 'state',
+								common: {
+									name: key,
+									type: state_type,
+									role: 'indicator',
+									read: true,
+									write: true,
+								},
+								native: {},
+							});
+						};
+					};
+				};
+				// setTimeout(function() {
+					// this.log.info("Callback Funktion wird aufgerufen");
+				// }, 3000);
+				
+				//very ugly solution for a timing issue todo: will rebuild this to work better e.g. w/ callback a callback function
+				for (var day_index in day_list) {
+					var day = day_list[day_index];
 
-        // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-        this.subscribeStates('testVariable');
-        // You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-        // this.subscribeStates('lights.*');
-        // Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-        // this.subscribeStates('*');
-
-        /*
-            setState examples
-            you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-        */
-        // the variable testVariable is set to true as command (ack=false)
-        await this.setStateAsync('testVariable', true);
-
-        // same thing, but the value is flagged "ack"
-        // ack should be always set to true if the value is received from or acknowledged from the target system
-        await this.setStateAsync('testVariable', { val: true, ack: true });
-
-        // same thing, but the state is deleted after 30s (getState will return null afterwards)
-        await this.setStateAsync('testVariable', { val: true, ack: true, expire: 30 });
-
-        // examples for the checkPassword/checkGroup functions
-        let result = await this.checkPasswordAsync('admin', 'iobroker');
-        this.log.info('check user admin pw iobroker: ' + result);
-
-        result = await this.checkGroupAsync('admin', 'admin');
-        this.log.info('check group user admin group admin: ' + result);
+					for (var key_index in key_list) {
+						var key = key_list[key_index];
+					  
+						for (let i = 0; i <= 23; i++) {
+							hour = subsequenceFromEndLast('0' + i, 1);
+							var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+							
+							this.setStateAsync(state_name, { 
+								val: result.data.viewer.homes[0].currentSubscription.priceInfo[day][i][key], 
+								ack: true 
+							});
+						};
+					};
+				};
+			})
+			//console.log(result.data.viewer.homes[0].currentSubscription.priceInfo.today);
+			//console.log(result);
+			.catch(error => this.log.error('error', error));
+		
+    
     }
 
     /**
@@ -103,22 +151,7 @@ class Tibber extends utils.Adapter {
         }
     }
 
-    // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-    // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-    // /**
-    //  * Is called if a subscribed object changes
-    //  * @param {string} id
-    //  * @param {ioBroker.Object | null | undefined} obj
-    //  */
-    // onObjectChange(id, obj) {
-    //     if (obj) {
-    //         // The object was changed
-    //         this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-    //     } else {
-    //         // The object was deleted
-    //         this.log.info(`object ${id} deleted`);
-    //     }
-    // }
+    
 
     /**
      * Is called if a subscribed state changes
@@ -135,24 +168,7 @@ class Tibber extends utils.Adapter {
         }
     }
 
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  * @param {ioBroker.Message} obj
-    //  */
-    // onMessage(obj) {
-    //     if (typeof obj === 'object' && obj.message) {
-    //         if (obj.command === 'send') {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info('send command');
-
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-    //         }
-    //     }
-    // }
-
+  
 }
 
 if (require.main !== module) {
