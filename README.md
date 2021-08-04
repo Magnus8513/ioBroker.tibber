@@ -2,7 +2,7 @@
 # ioBroker.tibber
 
 <!--
-todo: update later...
+
 
 #[![NPM version](https://img.shields.io/npm/v/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
 #[![Downloads](https://img.shields.io/npm/dm/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
@@ -17,10 +17,11 @@ todo: update later...
 
 ## tibber adapter for ioBroker
 
-Adapter for integration of tibber 
+This Adapter is meant to allow integration of the services tibber offers via their API to iobroker.
 
-...more to follow...
+I will start with pulling the price date for the next two days to allow usage as a source for appliances to pick grid friendly times to run.
 
+currently states for prices are created and initially populated upon start of the adapter. Will integrate a reaccurring refresh shortly...
 
 ## Changelog
 <!--
@@ -29,7 +30,7 @@ Adapter for integration of tibber
 -->
 
 ### **WORK IN PROGRESS**
-* (Magnus) initial release
+* (Magnus8513) 0.0.1 initial release 
 
 ## License
 MIT License
