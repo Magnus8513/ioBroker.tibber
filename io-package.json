@@ -88,8 +88,7 @@
     "installedFrom": "Magnus8513/ioBroker.tibber#616eaa75c5cccbf9df9fd87d806b2ec7dd60754d"
   },
   "native": {
-    "option1": true,
-    "option2": "42"
+    "access_token": "476c477d8a039529478ebd690d35ddd80e3308ffc49b59c65b142321aee963a4"
   },
   "objects": [],
   "instanceObjects": []

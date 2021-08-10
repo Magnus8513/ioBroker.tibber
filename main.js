@@ -46,8 +46,77 @@ class Tibber extends utils.Adapter {
 			var start = sequence.length - 1 - at1;
 			var end = sequence.length;
 			return sequence.slice(start, end);
-		};	
-		
+		};
+
+		function get_API_data (api_url, myHeaders, requestOptions) {
+			fetch(api_url, requestOptions)
+				.then(response => {
+					//this.log.info('response:  ' + response.json());
+					return response.json();
+				})
+				.then(result => {
+					var day_list = ['today', 'tomorrow'];
+					var key_list = ['total', 'energy', 'tax', 'startsAt'];
+
+					var hour = '';
+					for (var day_index in day_list) {
+						var day = day_list[day_index];
+						for (var key_index in key_list) {
+							var key = key_list[key_index];
+
+							for (let i = 0; i <= 23; i++) {
+								hour = subsequenceFromEndLast('0' + i, 1);
+								//this.log.info(hour);
+								var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+
+								//creating states for price info data if not yet existing:
+								var state_type = 'number'
+								if (key == 'startsAt') {
+									state_type = 'string';
+								};
+								//this.log.info(state_name);
+								this.setObjectNotExistsAsync(state_name, {
+									type: 'state',
+									common: {
+										name: key,
+										type: state_type,
+										role: 'indicator',
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+							};
+						};
+					};
+					// setTimeout(function() {
+					// this.log.info("Callback Funktion wird aufgerufen");
+					// }, 3000);
+
+					//very ugly solution for a timing issue todo: will rebuild this to work better e.g. w/ callback a callback function
+					for (var day_index in day_list) {
+						var day = day_list[day_index];
+
+						for (var key_index in key_list) {
+							var key = key_list[key_index];
+
+							for (let i = 0; i <= 23; i++) {
+								hour = subsequenceFromEndLast('0' + i, 1);
+								var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+
+								this.setStateAsync(state_name, {
+									val: result.data.viewer.homes[0].currentSubscription.priceInfo[day][i][key],
+									ack: true
+								});
+							};
+						};
+					};
+				})
+				//console.log(result.data.viewer.homes[0].currentSubscription.priceInfo.today);
+				//console.log(result);
+				.catch(error => this.log.error('error', error));
+		};
+
 		var myHeaders = new fetch.Headers();
 		myHeaders.append("Authorization", "Bearer " + access_token);
 		myHeaders.append("Content-Type", "application/json");
@@ -62,75 +131,9 @@ class Tibber extends utils.Adapter {
 		  body: graphql,
 		  redirect: 'follow'
 		};
-		
-		fetch("https://api.tibber.com/v1-beta/gql", requestOptions)
-			.then(response => {
-				//this.log.info('response:  ' + response.json());
-				return response.json();
-			})
- 			.then(result => {
-				var day_list = ['today', 'tomorrow'];
-				var key_list = ['total', 'energy', 'tax', 'startsAt'];
-				
-				var hour = '';
-				for (var day_index in day_list) {
-					var day = day_list[day_index];
-					for (var key_index in key_list) {
-						var key = key_list[key_index];
-					  
-						for (let i = 0; i <= 23; i++) {
-							hour = subsequenceFromEndLast('0' + i, 1);
-							//this.log.info(hour);
-							var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
-							
-							//creating states for price info data if not yet existing:
-							var state_type = 'number'
-							if (key == 'startsAt') { 
-								state_type = 'string'; 
-							};
-							//this.log.info(state_name);
-							this.setObjectNotExistsAsync(state_name, {
-								type: 'state',
-								common: {
-									name: key,
-									type: state_type,
-									role: 'indicator',
-									read: true,
-									write: true,
-								},
-								native: {},
-							});
-						};
-					};
-				};
-				// setTimeout(function() {
-					// this.log.info("Callback Funktion wird aufgerufen");
-				// }, 3000);
-				
-				//very ugly solution for a timing issue todo: will rebuild this to work better e.g. w/ callback a callback function
-				for (var day_index in day_list) {
-					var day = day_list[day_index];
 
-					for (var key_index in key_list) {
-						var key = key_list[key_index];
-					  
-						for (let i = 0; i <= 23; i++) {
-							hour = subsequenceFromEndLast('0' + i, 1);
-							var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
-							
-							this.setStateAsync(state_name, { 
-								val: result.data.viewer.homes[0].currentSubscription.priceInfo[day][i][key], 
-								ack: true 
-							});
-						};
-					};
-				};
-			})
-			//console.log(result.data.viewer.homes[0].currentSubscription.priceInfo.today);
-			//console.log(result);
-			.catch(error => this.log.error('error', error));
-		
-    
+		get_API_data(api_url,myHeaders, requestOptions);
+
     }
 
     /**
