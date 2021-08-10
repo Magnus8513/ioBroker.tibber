@@ -40,21 +40,46 @@ class Tibber extends utils.Adapter {
         var api_url = "https://api.tibber.com/v1-beta/gql";
         var access_token = this.config.access_token;
 		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
-		
-		
+		var myHeaders = new fetch.Headers();
+		myHeaders.append("Authorization", "Bearer " + access_token);
+		myHeaders.append("Content-Type", "application/json");
+
+		var graphql = JSON.stringify({
+			query: graphql_query,
+			//variables: {}
+		});
+		var requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: graphql,
+			redirect: 'follow'
+		};
 		function subsequenceFromEndLast(sequence, at1) {
 			var start = sequence.length - 1 - at1;
 			var end = sequence.length;
 			return sequence.slice(start, end);
 		};
 
-		function get_API_data (api_url, myHeaders, requestOptions) {
-			fetch(api_url, requestOptions)
+	//	function get_API_data(api_url, requestOptions1) {
+			fetch('https://api.tibber.com/v1-beta/gql', requestOptions)
 				.then(response => {
-					//this.log.info('response:  ' + response.json());
+
+					if (!response.ok) {
+						throw new Error('Network response was not ok. response status: ' + response.status);
+					};
+					const contentType = response.headers.get('content-type');
+					if (!contentType || !contentType.includes('application/json')) {
+						throw new TypeError("Did not receive expected JSON response from Tibber API - Did Tibber API change?");
+					};
+
 					return response.json();
 				})
 				.then(result => {
+					// const error_message = result.errors[0].message;
+					// if (error_message) {
+					// 	throw new Error('Tibber API returned error message:  ' + result.errors[0].message);
+					// };
+
 					var day_list = ['today', 'tomorrow'];
 					var key_list = ['total', 'energy', 'tax', 'startsAt'];
 
@@ -94,45 +119,30 @@ class Tibber extends utils.Adapter {
 					// }, 3000);
 
 					//very ugly solution for a timing issue todo: will rebuild this to work better e.g. w/ callback a callback function
-					for (var day_index in day_list) {
-						var day = day_list[day_index];
+					for ( day_index in day_list) {
+						day = day_list[day_index];
 
-						for (var key_index in key_list) {
-							var key = key_list[key_index];
+						for (key_index in key_list) {
+							key = key_list[key_index];
 
-							for (let i = 0; i <= 23; i++) {
-								hour = subsequenceFromEndLast('0' + i, 1);
+							for (let j = 0; j <= 23; j++) {
+								hour = subsequenceFromEndLast('0' + j, 1);
 								var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+								var value = '';
+								if (result.data.viewer.homes[0].currentSubscription.priceInfo[day].length > 0) {
+									value = result.data.viewer.homes[0].currentSubscription.priceInfo[day][j][key];
+								};
 
-								this.setStateAsync(state_name, {
-									val: result.data.viewer.homes[0].currentSubscription.priceInfo[day][i][key],
+									this.setStateAsync(state_name, {
+									val: value,
 									ack: true
 								});
 							};
 						};
 					};
 				})
-				//console.log(result.data.viewer.homes[0].currentSubscription.priceInfo.today);
-				//console.log(result);
-				.catch(error => this.log.error('error', error));
-		};
-
-		var myHeaders = new fetch.Headers();
-		myHeaders.append("Authorization", "Bearer " + access_token);
-		myHeaders.append("Content-Type", "application/json");
-
-		var graphql = JSON.stringify({
-		  query: graphql_query,
-		  //variables: {}
-		});
-		var requestOptions = {
-		  method: 'POST',
-		  headers: myHeaders,
-		  body: graphql,
-		  redirect: 'follow'
-		};
-
-		get_API_data(api_url,myHeaders, requestOptions);
+				//.catch(error => this.log.error('error' + error));
+				.catch(error => this.log.error('error during API fetch: ' + error));
 
     }
 
