@@ -128,7 +128,7 @@ class Tibber extends utils.Adapter {
 							for (let j = 0; j <= 23; j++) {
 								hour = subsequenceFromEndLast('0' + j, 1);
 								var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
-								var value = '';
+								var value = null;
 								if (result.data.viewer.homes[0].currentSubscription.priceInfo[day].length > 0) {
 									value = result.data.viewer.homes[0].currentSubscription.priceInfo[day][j][key];
 								};
