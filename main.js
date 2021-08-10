@@ -75,10 +75,10 @@ class Tibber extends utils.Adapter {
 					return response.json();
 				})
 				.then(result => {
-					// const error_message = result.errors[0].message;
-					// if (error_message) {
-					// 	throw new Error('Tibber API returned error message:  ' + result.errors[0].message);
-					// };
+					// check for API error response (e.g. invalid token);
+					 if (typeof result.errors !== 'undefined') {
+					 	throw new Error('Tibber API returned error message:  ' + result.errors[0].message);
+					 };
 
 					var day_list = ['today', 'tomorrow'];
 					var key_list = ['total', 'energy', 'tax', 'startsAt'];
