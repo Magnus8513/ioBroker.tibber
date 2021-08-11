@@ -42,7 +42,7 @@ class Tibber extends utils.Adapter {
         // this.config:
         var _api_url = "https://api.tibber.com/v1-beta/gql";
         var access_token = this.config.access_token;
-		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
+		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {current {total energy tax startsAt} today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
 		var myHeaders = new fetch.Headers();
 		myHeaders.append("Authorization", "Bearer " + access_token);
 		myHeaders.append("Content-Type", "application/json");
@@ -83,25 +83,52 @@ class Tibber extends utils.Adapter {
 					 	throw new Error('Tibber API returned error message:  ' + result.errors[0].message);
 					 };
 
-					var day_list = ['today', 'tomorrow'];
+					var day_list = ['current', 'today', 'tomorrow'];
 					var key_list = ['total', 'energy', 'tax', 'startsAt'];
 
 					var hour = '';
+					var state_name = '';
+					let value = null;
 					for (var day_index in day_list) {
 						var day = day_list[day_index];
 						for (var key_index in key_list) {
 							var key = key_list[key_index];
+							var state_type = 'number'
+							//create states and fill them for current hour
+							if (key == 'startsAt') {
+								state_type = 'string';
+							};
+							if (day == 'current') {
+								state_name = 'priceInfo.current.' + key;
+								self.setObjectNotExistsAsync(state_name, {
+									type: 'state',
+									common: {
+										name: key,
+										type: state_type,
+										role: 'indicator',
+										read: true,
+										write: true,
+									},
+									native: {},
+								});
+								value = result.data.viewer.homes[0].currentSubscription.priceInfo.current[key];
 
-							for (let i = 0; i <= 23; i++) {
+
+								self.setStateAsync(state_name, {
+									val: value,
+									ack: true
+								});
+
+							}
+							//do the same for today and tomorrow for all hours
+							else {
+								for (let i = 0; i <= 23; i++) {
 								hour = subsequenceFromEndLast('0' + i, 1);
 								//this.log.info(hour);
-								var state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
+								state_name = 'priceInfo.' + day + '.' + hour + '.' + key;
 
 								//creating states for price info data if not yet existing:
-								var state_type = 'number'
-								if (key == 'startsAt') {
-									state_type = 'string';
-								};
+
 								//this.log.info(state_name);
 								self.setObjectNotExistsAsync(state_name, {
 									type: 'state',
@@ -125,6 +152,7 @@ class Tibber extends utils.Adapter {
 									val: value,
 									ack: true
 								});
+							};
 							};
 						};
 					};
