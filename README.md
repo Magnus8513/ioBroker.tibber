@@ -4,11 +4,12 @@
 
 
 https://www.npmjs.com/package/iobroker.tibber
-#[![NPM version](https://img.shields.io/npm/v/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
-#[![Downloads](https://img.shields.io/npm/dm/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
-#![Number of Installations (latest)](https://iobroker.live/badges/tibber-installed.svg)
-#![Number of Installations (stable)](https://iobroker.live/badges/tibber-stable.svg)
-#[![Dependency Status](https://img.shields.io/david/Author/iobroker.tibber.svg)](https://david-dm.org/Author/iobroker.tibber)
+
+[![NPM version](https://img.shields.io/npm/v/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
+![Number of Installations (latest)](https://iobroker.live/badges/tibber-installed.svg)
+![Number of Installations (stable)](https://iobroker.live/badges/tibber-stable.svg)
+[![Dependency Status](https://img.shields.io/david/Author/iobroker.tibber.svg)](https://david-dm.org/Author/iobroker.tibber)
 
 [![NPM](https://nodei.co/npm/iobroker.tibber.png?downloads=true)](https://nodei.co/npm/iobroker.tibber/)
 
