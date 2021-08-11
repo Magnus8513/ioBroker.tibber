@@ -29,7 +29,6 @@ I will start with pulling the price date for the next two days to allow usage as
     ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
 * (Magnus8513) 0.0.2 first (beta) release
   * added hourly refresh
   * added "current" date to display the current hour data
