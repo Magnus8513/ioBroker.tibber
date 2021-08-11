@@ -1,44 +1,23 @@
 {
   "common": {
     "name": "tibber",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "news": {
       "0.0.1": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "首次出版"
+        "en": "initial (alpha) release"
+
+      },
+      "0.0.2": {
+        "en": "initial (beta) release"
       }
     },
     "titleLang": {
       "en": "tibber",
-      "de": "tibber",
-      "ru": "Шаблон (JavaScript)",
-      "pt": "Modelo (JavaScript)",
-      "nl": "Sjabloon (JavaScript)",
-      "fr": "Modèle (JavaScript)",
-      "it": "Modello (JavaScript)",
-      "es": "Plantilla (JavaScript)",
-      "pl": "Szablon (JavaScript)",
-      "zh-cn": "模板 (JavaScript)"
+      "de": "tibber"
     },
     "desc": {
       "en": "adapter for integration of tibber",
-      "de": "Adapter zur Integration von tibber",
-      "ru": "Шаблон для разработки адаптера",
-      "pt": "Modelo para desenvolvimento de adaptador",
-      "nl": "Sjabloon voor adapterontwikkeling",
-      "fr": "Modèle pour le développement d'adaptateurs",
-      "it": "Modello per lo sviluppo dell'adattatore",
-      "es": "Plantilla para el desarrollo de adaptadores",
-      "pl": "Szablon do opracowania adaptera",
-      "zh-cn": "适配器开发模板"
+      "de": "Adapter zur Integration von tibber"
     },
     "authors": [
       "Author <tibber@mblatt.de>"
@@ -66,15 +45,7 @@
       "singleton": true,
       "name": {
         "en": "tibber",
-        "de": "tibber",
-        "ru": "Шаблон (JavaScript)",
-        "pt": "Modelo (JavaScript)",
-        "nl": "Sjabloon (JavaScript)",
-        "fr": "Modèle (JavaScript)",
-        "it": "Modello (JavaScript)",
-        "es": "Plantilla (JavaScript)",
-        "pl": "Szablon (JavaScript)",
-        "zh-cn": "模板 (JavaScript)"
+        "de": "tibber"
       },
       "link": "",
       "fa-icon": "info"
