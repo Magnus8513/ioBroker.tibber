@@ -15,6 +15,8 @@ https://www.npmjs.com/package/iobroker.tibber
 
 **Tests:** ![Test and Release](https://github.com/Magnus8513/ioBroker.tibber/workflows/Test%20and%20Release/badge.svg)
 
+testing discussions/feedback are encouraged as issues here, or via: 
+[Link zum Test Thema im Forum](https://forum.iobroker.net/topic/46954/test-adapter-tibber-v0-1-x)
 
 ## tibber adapter for ioBroker
 
