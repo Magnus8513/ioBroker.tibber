@@ -1,19 +1,19 @@
 ![Logo](admin/tibber.png)
 # ioBroker.tibber
 
-<!--
 
 
-#[![NPM version](https://img.shields.io/npm/v/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
-#[![Downloads](https://img.shields.io/npm/dm/iobroker.template.svg)](https://www.npmjs.com/package/iobroker.template)
-#![Number of Installations (latest)](https://iobroker.live/badges/template-installed.svg)
-#![Number of Installations (stable)](https://iobroker.live/badges/template-stable.svg)
-#[![Dependency Status](https://img.shields.io/david/Author/iobroker.template.svg)](https://david-dm.org/Author/iobroker.template)
+https://www.npmjs.com/package/iobroker.tibber
+#[![NPM version](https://img.shields.io/npm/v/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
+#[![Downloads](https://img.shields.io/npm/dm/iobroker.tibber.svg)](https://www.npmjs.com/package/iobroker.tibber)
+#![Number of Installations (latest)](https://iobroker.live/badges/tibber-installed.svg)
+#![Number of Installations (stable)](https://iobroker.live/badges/tibber-stable.svg)
+#[![Dependency Status](https://img.shields.io/david/Author/iobroker.tibber.svg)](https://david-dm.org/Author/iobroker.tibber)
 
-[![NPM](https://nodei.co/npm/iobroker.template.png?downloads=true)](https://nodei.co/npm/iobroker.template/)
+[![NPM](https://nodei.co/npm/iobroker.tibber.png?downloads=true)](https://nodei.co/npm/iobroker.tibber/)
 
-**Tests:** ![Test and Release](https://github.com/Author/ioBroker.template/workflows/Test%20and%20Release/badge.svg)
--->
+**Tests:** ![Test and Release](https://github.com/Magnus8513/ioBroker.tibber/workflows/Test%20and%20Release/badge.svg)
+
 
 ## tibber adapter for ioBroker
 
