@@ -10,8 +10,11 @@ const utils = require('@iobroker/adapter-core');
 
 // Load your modules here, e.g.:
 const fetch = require('node-fetch');
+const schedule = require('node-schedule');
 
 class Tibber extends utils.Adapter {
+	//regular_refresh;
+
 
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -37,7 +40,7 @@ class Tibber extends utils.Adapter {
 
         // The adapters config (in the instance object everything under the attribute "native") is accessible via
         // this.config:
-        var api_url = "https://api.tibber.com/v1-beta/gql";
+        var _api_url = "https://api.tibber.com/v1-beta/gql";
         var access_token = this.config.access_token;
 		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
 		var myHeaders = new fetch.Headers();
@@ -48,7 +51,7 @@ class Tibber extends utils.Adapter {
 			query: graphql_query,
 			//variables: {}
 		});
-		var requestOptions = {
+		var _requestOptions = {
 			method: 'POST',
 			headers: myHeaders,
 			body: graphql,
@@ -60,8 +63,8 @@ class Tibber extends utils.Adapter {
 			return sequence.slice(start, end);
 		};
 
-	//	function get_API_data(api_url, requestOptions1) {
-			fetch('https://api.tibber.com/v1-beta/gql', requestOptions)
+		function get_API_data(self,api_url, requestOptions) {
+			fetch(api_url, requestOptions)
 				.then(response => {
 
 					if (!response.ok) {
@@ -100,7 +103,7 @@ class Tibber extends utils.Adapter {
 									state_type = 'string';
 								};
 								//this.log.info(state_name);
-								this.setObjectNotExistsAsync(state_name, {
+								self.setObjectNotExistsAsync(state_name, {
 									type: 'state',
 									common: {
 										name: key,
@@ -111,6 +114,17 @@ class Tibber extends utils.Adapter {
 									},
 									native: {},
 								});
+
+								//write values (currently throws warning as state might not yet exist when executed. todo: lookinto solving this with callback function on state creation
+								let value = null;
+								if (result.data.viewer.homes[0].currentSubscription.priceInfo[day].length > 0) {
+									value = result.data.viewer.homes[0].currentSubscription.priceInfo[day][i][key];
+								};
+
+								self.setStateAsync(state_name, {
+									val: value,
+									ack: true
+								});
 							};
 						};
 					};
@@ -119,7 +133,7 @@ class Tibber extends utils.Adapter {
 					// }, 3000);
 
 					//very ugly solution for a timing issue todo: will rebuild this to work better e.g. w/ callback a callback function
-					for ( day_index in day_list) {
+				/*	for ( day_index in day_list) {
 						day = day_list[day_index];
 
 						for (key_index in key_list) {
@@ -133,17 +147,29 @@ class Tibber extends utils.Adapter {
 									value = result.data.viewer.homes[0].currentSubscription.priceInfo[day][j][key];
 								};
 
-									this.setStateAsync(state_name, {
+									self.setStateAsync(state_name, {
 									val: value,
 									ack: true
 								});
 							};
 						};
-					};
+					}; */
+					self.log.info('Tibber refresh success');
 				})
 				//.catch(error => this.log.error('error' + error));
-				.catch(error => this.log.error('error during API fetch: ' + error));
+				.catch(error => self.log.error('error during API fetch: ' + error));
+		};
 
+		const _self = this;
+		get_API_data(_self,_api_url,_requestOptions);
+
+		//this.regular_refresh = setInterval(get_API_data, 6000,self1, api_url1, requestOptions1);
+
+		this.job = schedule.scheduleJob('0 * * * *', function(){
+			get_API_data(_self,_api_url,_requestOptions);
+		});
+
+		//		.catch(error => Tibber.log.error('error during call: ' + error));
     }
 
     /**
@@ -157,7 +183,8 @@ class Tibber extends utils.Adapter {
             // clearTimeout(timeout2);
             // ...
             // clearInterval(interval1);
-
+			//clearInterval(this.regular_refresh);
+			this.job.cancel();
             callback();
         } catch (e) {
             callback();
