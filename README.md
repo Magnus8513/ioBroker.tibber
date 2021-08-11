@@ -30,13 +30,17 @@ I will start with pulling the price date for the next two days to allow usage as
     ### **WORK IN PROGRESS**
 -->
 
-* (Magnus8513) 0.0.2 first (beta) release
+* (Magnus8513) v0.1.0-beta.1 first (beta) release
+  * added currency key
+  * aligned version tag for beta testing
+  
+* (Magnus8513) v0.0.2-alpha second (alpha) release
   * added hourly refresh
   * added "current" date to display the current hour data
   * added some initial error handling
   * added prefill with demo token
   
-* (Magnus8513) 0.0.1 initial release 
+* (Magnus8513) v0.0.1-alpha initial (alpha) release 
 
 
 ## License
