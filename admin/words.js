@@ -11,7 +11,7 @@ systemDictionary = {
         'de': 'Access Token'
     },
     'access_token_desc': {
-        'en': 'Your tibber Access Token (to be found here: https://developer.tibber.com/settings/accesstoken)',
-        'de': 'Ihr tibber Access Token (hier zu finden: https://developer.tibber.com/settings/accesstoken)'
+        'en': 'Your tibber Access Token (to be found here: <a href="https://developer.tibber.com/settings/accesstoken" target="_blank">Tibber developer</a>) <br> initially prefilled with demo token: 476c477d8a039529478ebd690d35ddd80e3308ffc49b59c65b142321aee963a4',
+        'de': 'Ihr tibber Access Token (hier zu finden: <a href="https://developer.tibber.com/settings/accesstoken" target="_blank">Tibber developer</a>) <br> initial vorbefüllt mit demo token: 476c477d8a039529478ebd690d35ddd80e3308ffc49b59c65b142321aee963a4'
     }
 };
