@@ -42,7 +42,7 @@ class Tibber extends utils.Adapter {
         // this.config:
         var _api_url = "https://api.tibber.com/v1-beta/gql";
         var access_token = this.config.access_token;
-		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {current {total energy tax startsAt} today {total energy tax startsAt} tomorrow {total energy tax startsAt}}}}}}"
+		var graphql_query = "{viewer {homes {currentSubscription {priceInfo {current {total energy tax currency startsAt} today {total energy tax currency startsAt} tomorrow {total energy tax currency startsAt}}}}}}"
 		var myHeaders = new fetch.Headers();
 		myHeaders.append("Authorization", "Bearer " + access_token);
 		myHeaders.append("Content-Type", "application/json");
@@ -84,7 +84,7 @@ class Tibber extends utils.Adapter {
 					 };
 
 					var day_list = ['current', 'today', 'tomorrow'];
-					var key_list = ['total', 'energy', 'tax', 'startsAt'];
+					var key_list = ['total', 'energy', 'tax', 'currency', 'startsAt'];
 
 					var hour = '';
 					var state_name = '';
@@ -95,7 +95,7 @@ class Tibber extends utils.Adapter {
 							var key = key_list[key_index];
 							var state_type = 'number'
 							//create states and fill them for current hour
-							if (key == 'startsAt') {
+							if (['startsAt','currency'].includes(key)) {
 								state_type = 'string';
 							};
 							if (day == 'current') {
