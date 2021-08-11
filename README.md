@@ -19,9 +19,9 @@
 
 This Adapter is meant to allow integration of the services tibber offers via their API to iobroker.
 
-I will start with pulling the price date for the next two days to allow usage as a source for appliances to pick grid friendly times to run.
+Upon first run the adapter currently is preconfigured with the demo token. To access your personal data, please add your tibber token to the config.
 
-currently states for prices are created and initially populated upon start of the adapter. Will integrate a reaccurring refresh shortly...
+I will start with pulling the price date for the next two days to allow usage as a source for appliances to pick grid friendly times to run.
 
 ## Changelog
 <!--
@@ -30,7 +30,14 @@ currently states for prices are created and initially populated upon start of th
 -->
 
 ### **WORK IN PROGRESS**
+* (Magnus8513) 0.0.2 first (beta) release
+  * added hourly refresh
+  * added "current" date to display the current hour data
+  * added some initial error handling
+  * added prefill with demo token
+  
 * (Magnus8513) 0.0.1 initial release 
+
 
 ## License
 MIT License
