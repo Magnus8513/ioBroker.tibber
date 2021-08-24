@@ -24,15 +24,35 @@ This Adapter is meant to allow integration of the services tibber offers via the
 
 Upon first run the adapter currently is preconfigured with the demo token. To access your personal data, please add your tibber token to the config.
 
-I will start with pulling the price date for the next two days to allow usage as a source for appliances to pick grid friendly times to run.
+implemented functionality:
+* pulls price date for the next two days to allow usage as a source for appliances to pick grid friendly times to run.
+* offers "calculation function" that returns the best start for an appliance to run for a given time and max end time.
+  * usage instructions:
+    1. populate the following fields in the calculation channel
+       a. Duration : hours as integer that the appliance will run), 
+       b. LastEnd : DateTime as ISO String by when appliance needs to finish latest
+    2. set "GetBestTime" to true
+    3. Read return from fields:
+       a. Feedback: list of best hours or Error Message
+       b. BestStart: DateTime for optimal Start
+       c. CronString: cronstring to schedule start of appliance at BestStart
+
+planned functionality:
+* get actual consumption values
+* calculate money saved/spend by hourly vs. monthly contracting
+* your ideas -> leave me an issue here or join the discussion in the forum (see link above)
+
 
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+* (Magnus8513) v0.2.0-beta feature update release 
+  * added calculations logic
+  * code optimizations
 
-* (Magnus8513) v0.1.0-beta.1 first (beta) release
+* (Magnus8513) v0.1.0-beta first (beta) release
   * added currency key
   * aligned version tag for beta testing
   
