@@ -492,7 +492,6 @@ class Tibber extends utils.Adapter {
 					i_inc3 = -i_inc3;
 				}
 				for (let i = current_hour; i_inc3 >= 0 ? i < maxhour : i >= maxhour; i += i_inc3) {
-					//Preise.push(this.getState(([this.namespace + '.priceInfo.today.',this.subsequenceFromEndLast(('0' + String(('' + i))), 1),'.total'].join(''))).val);
 					state = await this.getStateAsync(this.namespace + '.priceInfo.today.' + this.subsequenceFromEndLast('0' + String('' + i), 1) + '.total');
 					Preise.push(state.val);
 				}

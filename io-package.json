@@ -49,16 +49,6 @@
     "type": "general",
     "compact": true,
     "materialize": true,
-    "materializeTab": true,
-    "adminTab": {
-      "singleton": true,
-      "name": {
-        "en": "tibber",
-        "de": "tibber"
-      },
-      "link": "",
-      "fa-icon": "info"
-    },
     "supportCustoms": true,
     "dependencies": [
       {
