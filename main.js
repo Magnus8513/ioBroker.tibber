@@ -323,9 +323,18 @@ class Tibber extends utils.Adapter {
   	async onStateChange(id, state) {
 		if (state) {
 			try {
-				if (id === this.namespace + '.calculations.GetBestTime' ) {
+				if (id === this.namespace + '.calculations.GetBestTime' && state.val === true) {
 					let Duration = await this.getStateAsync(this.namespace + '.calculations.Duration');
 					let LastEnd = await this.getStateAsync(this.namespace + '.calculations.LastEnd');
+
+					await this.setStateAsync(this.namespace + '.calculations.CronString', {
+						val: '',
+						ack: true
+					});
+					await this.setStateAsync(this.namespace + '.calculations.BestStart', {
+						val: '',
+						ack: true
+					});
 					let result = await this.get_best_timeslot(Duration.val, LastEnd.val);
 					// The state was changed
 					//this.log.info('string: ' + this.namespace + '.calculations.GetBestTime');
@@ -337,6 +346,7 @@ class Tibber extends utils.Adapter {
 						val: JSON.stringify(result),
 						ack: true
 					});
+
 					let now = DateTime.now()
 					let day = now.c.day
 					if (now.c.hour > result[0]) {
@@ -362,9 +372,20 @@ class Tibber extends utils.Adapter {
 						val: cron,
 						ack: true
 					});
+
+
+					await this.setStateAsync(this.namespace + '.calculations.GetBestTime', {
+						val: false,
+						ack: true
+					});
+
 				}
 			} catch(error) {
 				this.log.error(error);
+				await this.setStateAsync(this.namespace + '.calculations.GetBestTime', {
+					val: false,
+					ack: true
+				});
 			}
 
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
