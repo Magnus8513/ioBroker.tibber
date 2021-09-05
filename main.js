@@ -447,7 +447,7 @@ class Tibber extends utils.Adapter {
 			if(now.c.hour < 13 && LastEndDate.c.day > now.c.day ) {
 				ErrorMsg = 'LastEnd too far in future - price data for tomorrow only available after 1pm today. LastEnd: ' + LastEnd;
 			}
-			if(now.plus({ hours: hours}).c.hour  >= LastEndDate.c.hour ) {
+			if(now.plus({ hours: hours})  >= LastEndDate ) {
 				ErrorMsg = 'LastEnd too soon for given duration. LastEnd: ' + LastEnd + ', duration: ' + hours;
 			}
 			if(ErrorMsg !== '') {
@@ -465,10 +465,10 @@ class Tibber extends utils.Adapter {
 			let state = '';
 			if (now.c.day < LastEndDate.c.day) {
 				let i_inc = 1;
-				if (current_hour > 23) {
+				if ((current_hour + 1) > 23) {
 					i_inc = -i_inc;
 				}
-				for (let i = current_hour; i_inc >= 0 ? i <= 23 : i >= 23; i += i_inc) {
+				for (let i = (current_hour + 1) ; i_inc >= 0 ? i <= 23 : i >= 23; i += i_inc) {
 					let id = this.namespace + '.priceInfo.today.' + this.subsequenceFromEndLast('0' + String('' + i), 1) + '.total';
 					state = await this.getStateAsync(id);
 					//let state = await this.getStateAsync(this.namespace + '.calculations.Feedback');
@@ -488,10 +488,10 @@ class Tibber extends utils.Adapter {
 				}
 			} else {
 				let i_inc3 = 1;
-				if (current_hour > maxhour) {
+				if ((current_hour+1) > maxhour) {
 					i_inc3 = -i_inc3;
 				}
-				for (let i = current_hour; i_inc3 >= 0 ? i < maxhour : i >= maxhour; i += i_inc3) {
+				for (let i = (current_hour+1); i_inc3 >= 0 ? i < maxhour : i >= maxhour; i += i_inc3) {
 					state = await this.getStateAsync(this.namespace + '.priceInfo.today.' + this.subsequenceFromEndLast('0' + String('' + i), 1) + '.total');
 					Preise.push(state.val);
 				}
@@ -502,7 +502,7 @@ class Tibber extends utils.Adapter {
 			let best_hours = [];
 			for (let count = 0; count < hours; count++) {
 				let low = prices_sorted.shift();
-				let low_hour = (current_hour - 1) + Preise.indexOf(low) + 1;
+				let low_hour = (current_hour  + Preise.indexOf(low) + 1);
 				best_hours.push(low_hour < 24 ? low_hour : low_hour - 24);
 				Preise[((Preise.indexOf(low) + 1) - 1)] = 9;
 			}
