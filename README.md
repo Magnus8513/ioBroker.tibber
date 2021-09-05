@@ -51,7 +51,9 @@ planned functionality:
 * (Magnus8513) v0.2.1-beta feature refinement/ bug fix release
     * added cleaning of calc result values before run
     * reset trigger value (GetBestTIme) to false after run
-    * removed orphaned info tab reference
+    * removed orphaned info tab reference 
+    * fixed bug in calculation logic
+    * limited results to start at next full hour at the earliest to allow proper processing.
   
 * (Magnus8513) v0.2.0-beta feature update release 
   * added calculations logic
