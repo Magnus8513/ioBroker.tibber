@@ -48,6 +48,10 @@ planned functionality:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+* (Magnus8513) v0.2.1-beta feature update release
+    * added cleaning of calc result values before run
+    * reset trigger value (GetBestTIme) to false after run
+  
 * (Magnus8513) v0.2.0-beta feature update release 
   * added calculations logic
   * code optimizations

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "tibber",
-    "version": "0.2.0-beta",
+    "version": "0.2.1-beta",
     "news": {
       "0.0.1-alpha": {
         "en": "initial (alpha) release"
@@ -14,6 +14,9 @@
         "en": "first (beta) release"
       },
       "0.2.0-beta": {
+        "en": "beta with calculation feature"
+      },
+      "0.2.1-beta": {
         "en": "beta with calculation feature"
       }
     },
