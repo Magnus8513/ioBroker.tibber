@@ -52,9 +52,10 @@ planned functionality:
     * added cleaning of calc result values before run
     * reset trigger value (GetBestTIme) to false after run
   
-* (Magnus8513) v0.2.0-beta feature update release 
+* (Magnus8513) v0.2.0-beta feature refinement/bug fix release 
   * added calculations logic
   * code optimizations
+  * removed orphaned info tab reference
 
 * (Magnus8513) v0.1.0-beta first (beta) release
   * added currency key
