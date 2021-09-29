@@ -41,7 +41,7 @@ class Tibber extends utils.Adapter {
 		myHeaders.append("Authorization", "Bearer " + this.config.access_token);
 		myHeaders.append("Content-Type", "application/json");
 
-		const graphql_query = "{viewer {homes {currentSubscription {priceInfo {current {total energy tax currency startsAt} today {total energy tax currency startsAt} tomorrow {total energy tax currency startsAt}}}}}}",
+		const graphql_query = "{viewer {homes {currentSubscription {priceInfo {current {total energy tax currency startsAt level} today {total energy tax currency startsAt level} tomorrow {total energy tax currency startsAt level}}}}}}",
 			graphql = JSON.stringify({
 			query: graphql_query,
 			//variables: {}
@@ -198,7 +198,7 @@ class Tibber extends utils.Adapter {
 				}
 
 				var day_list = ['current', 'today', 'tomorrow'];
-				var key_list = ['total', 'energy', 'tax', 'currency', 'startsAt'];
+				var key_list = ['total', 'energy', 'tax', 'currency', 'startsAt', 'level'];
 
 				var hour = '';
 				var state_name = '';
@@ -209,7 +209,7 @@ class Tibber extends utils.Adapter {
 						var key = key_list[key_index];
 						var state_type = 'number'
 						//create states and fill them for current hour
-						if (['startsAt','currency'].includes(key)) {
+						if (['startsAt','currency', 'level'].includes(key)) {
 							state_type = 'string';
 						}
 						if (day === 'current') {

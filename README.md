@@ -48,6 +48,9 @@ planned functionality:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+* (Magnus8513) v0.3.0-beta feature addition
+    * added level value to hourly price info
+
 * (Magnus8513) v0.2.1-beta feature refinement/ bug fix release
     * added cleaning of calc result values before run
     * reset trigger value (GetBestTIme) to false after run
