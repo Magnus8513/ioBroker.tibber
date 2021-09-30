@@ -349,13 +349,15 @@ class Tibber extends utils.Adapter {
 
 					let now = DateTime.now()
 					let day = now.c.day
+
 					if (now.c.hour > result[0]) {
-						day += 1;
+						now = now.plus({ days: 1 })
+
 					}
 					let BestStart = DateTime.fromObject({
 						year: now.c.year,
 						month: now.c.month,
-						day: day,
+						day: now.day,
 						hour: result[0]
 					});
 					await this.setStateAsync(this.namespace + '.calculations.BestStart', {
@@ -396,7 +398,11 @@ class Tibber extends utils.Adapter {
 		}
     }
 
-
+	addDays(date, days) {
+		let result = new Date(date);
+		result.setDate(result.getDate() + days);
+		return result;
+	}
 	subsequenceFromEndLast(sequence, at1) {
 		let start = sequence.length - 1 - at1,
 			end = sequence.length;
@@ -441,12 +447,18 @@ class Tibber extends utils.Adapter {
 			if(LastEndDate < now) {
 				ErrorMsg = 'Entry provided for LastEnd in the past. LastEnd: ' + LastEnd;
 			}
-			if(LastEndDate.c.day > now.c.day + 1 ) {
-				ErrorMsg = 'LastEnd to far in future - price data only available until tomorrow midnight. LastEnd: ' + LastEnd;
-			}
-			if(now.c.hour < 13 && LastEndDate.c.day > now.c.day ) {
+			console.log('test');
+			let diff = (LastEndDate - now)
+			let diff_hours = Math.floor(diff / (1000*60*60))
+			if(now.c.hour < 13 && (diff_hours + now.c.hour > 23) ) {
 				ErrorMsg = 'LastEnd too far in future - price data for tomorrow only available after 1pm today. LastEnd: ' + LastEnd;
 			}
+
+			if(diff_hours + now.c.hour >= 47 ) {
+				ErrorMsg = 'LastEnd to far in future - price data only available until tomorrow midnight. LastEnd: ' + LastEnd;
+			}
+
+
 			if(now.plus({ hours: hours})  >= LastEndDate ) {
 				ErrorMsg = 'LastEnd too soon for given duration. LastEnd: ' + LastEnd + ', duration: ' + hours;
 			}
@@ -463,7 +475,7 @@ class Tibber extends utils.Adapter {
 
 			let Preise = [];
 			let state = '';
-			if (now.c.day < LastEndDate.c.day) {
+			if (now.c.day < LastEndDate.c.day || now.c.month < LastEndDate.c.month || now.c.year < LastEndDate.c.month) {
 				let i_inc = 1;
 				if ((current_hour + 1) > 23) {
 					i_inc = -i_inc;

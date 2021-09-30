@@ -48,6 +48,9 @@ planned functionality:
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+* (Magnus8513) v0.3.1-beta feature addition
+    * bug fixed in calculation feature for month changes
+
 * (Magnus8513) v0.3.0-beta feature addition
     * added level value to hourly price info
 

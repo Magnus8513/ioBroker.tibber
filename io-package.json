@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "tibber",
-    "version": "0.3.0-beta",
+    "version": "0.3.1-beta",
     "news": {
       "0.0.1-alpha": {
         "en": "initial (alpha) release"
@@ -21,6 +21,9 @@
       },
       "0.3.0-beta": {
         "en": "beta with added level feature"
+      },
+      "0.3.2-beta": {
+        "en": "bug fixing for month changeover"
       }
     },
     "titleLang": {
